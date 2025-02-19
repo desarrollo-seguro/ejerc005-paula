@@ -1,14 +1,17 @@
 package es.santander.ascender.ejerc005.service;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.santander.ascender.ejerc005.repository.PersonaRepository;
 import es.santander.ascender.ejerc005.model.Persona;
 
 @Service
+@Transactional
 public class PersonaService {
 
     @Autowired
@@ -23,10 +26,12 @@ public class PersonaService {
         return repository.save(persona);
     }
 
+    @Transactional(readOnly = true)
     public Persona read(Long id){
         return repository.findById(id).orElse(null);
     }
 
+    @Transactional(readOnly = true)
     public List<Persona> read(){
         return repository.findAll();
     }
@@ -42,6 +47,12 @@ public class PersonaService {
 
     public void delete(Long id){
         repository.deleteById(id);
+
+        if (new Random().nextDouble() > 0.5) {
+            throw new RuntimeException("Mala suerte");
+        }
+
+        repository.deleteById(id + 1);
         return;
     }
 }

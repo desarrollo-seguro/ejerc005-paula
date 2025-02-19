@@ -17,7 +17,7 @@ public class PersonaRepositoryTest {
     private PersonaRepository repository;
 
      @Test
-        public void testCreate() {
+    public void testCreate() {
                 Persona persona = new Persona();
                 persona.setNombre("Paula");
                 persona.setApellido("Gomez");
